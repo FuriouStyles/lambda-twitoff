@@ -1,10 +1,15 @@
-db = SQLAlchemy(app)
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-migrate = Migrate(app, db)
+db = SQLAlchemy()
+
+migrate = Migrate()
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
+
 
 class Tweet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,4 +17,4 @@ class Tweet(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     embedding = db.Column(db.PickleType)
 
-    user - df.relationship("User", backref=db.backref("tweets", lazy=True))
+    user = db.relationship("User", backref=db.backref("tweets", lazy=True))
