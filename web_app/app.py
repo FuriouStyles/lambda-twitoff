@@ -1,11 +1,16 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from web_app.models import db, User, Tweet, migrate
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_data.db"
 
-db = SQLAlchemy(app)
+DB_URL = os.getenv("DB_URL")
 
 migrate = Migrate(app, db)
 
@@ -38,3 +43,12 @@ def create_user():
     print("FORM DATA:", dict(request.form))
     # todo: create a new user
     return jsonify({"message": "CREATED OK (TODO)"})
+
+def create_app():
+
+    app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_data.db"
+    app.config["SQLALCHEMY_DATABASE_TRACKING"] = False
+
+    db.init_app(app)
+    
