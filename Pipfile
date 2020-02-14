@@ -7,8 +7,13 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-flaskalchemy = "*"
+flask-sqlalchemy = "*"
 flask-migrate = "*"
+jsonify = "*"
+python-dotenv = "*"
+requests = "*"
+tweepy = "*"
+basilica = "*"
 
 [requires]
 python_version = "3.7"
