@@ -50,10 +50,11 @@ def create_user():
     print("FORM DATA:", dict(request.form))
     # todo: create a new user
     # return jsonify({"message": "CREATED OK (TODO)"})
-    if "name" in request.form:
-        name = request.form["name"]
-        print(name)
+    if "username" in dict(request.form):
+        name = request.form["username"]
+        country = request.form["country"]
         db.session.add(User(name=name))
+        # db.session.add(User(country=country))
         db.session.commit()
         return jsonify({"message": "CREATED OK", "name": name})
     else:
@@ -85,3 +86,23 @@ def get_tweets():
         tweets.append({"id": status.id_str, "message": status.full_text})
     print(tweets)
     return jsonify(tweets)
+
+
+@my_routes.route("/get_user_tweets")
+def get_user_tweets():
+    return render_template("user_tweets.html")
+
+
+@my_routes.route("/user_tweets", methods=["POST"])
+def user_tweets():
+    tweets = []
+    client = twitter_api_client()
+    handle = dict(request.form)
+    statuses = client.user_timeline(handle['username'], tweet_mode="extended")
+    for status in statuses:
+        tweets.append({"created": status.created_at,
+                       "user": status.user,
+                       "message": status.full_text})
+    return render_template("user_timeline.html",
+                           tweets=tweets,
+                           handle=handle)

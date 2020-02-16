@@ -9,13 +9,13 @@ from web_app.routes import my_routes
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", default="OOPS")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def create_app():
 
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_data.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     app.config["SQLALCHEMY_DATABASE_TRACKING"] = False
 
     db.init_app(app)
