@@ -1,11 +1,10 @@
-<html lang="en">
+<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device=width, initial-scale=1.0">
 </head>
 <body>
   <h1>{{ handle.username }}'s Timeline</h1>
-  <!-- for loop with the user's tweets here -->
   {% for tweet in tweets %}
   <h3>Date: {{ tweet.created }}</h3>
   <p>{{ tweet.message }}

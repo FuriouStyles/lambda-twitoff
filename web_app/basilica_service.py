@@ -1,20 +1,16 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+import os
+from dotenv import load_dotenv
+import basilica
 
-db = SQLAlchemy()
+load_dotenv()
 
-migrate = Migrate()
+BASILICA_API_KEY = os.getenv("BASILICA_API_KEY", default="OOPS")
 
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
+connection = basilica.Connection(BASILICA_API_KEY)
 
 
-class Tweet(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    embedding = db.Column(db.PickleType)
+def embed_tweets(tweets):
+    """Return a list of basilica embeddings for a given list of tweets."""
+    return list(connection.embed_sentences(tweets))
 
-    user = db.relationship("User", backref=db.backref("tweets", lazy=True))
+embeddings = list(connection.embed_sentences(sentences))

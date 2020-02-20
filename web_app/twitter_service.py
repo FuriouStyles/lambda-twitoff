@@ -7,7 +7,8 @@ load_dotenv()
 TWITTER_API_KEY = os.getenv("TWITTER_API_KEY", default="OOPS")
 TWITTER_API_SECRET = os.getenv("TWITTER_API_SECRET", default="OOPS")
 TWITTER_ACCESS_TOKEN = os.getenv("TWITTER_ACCESS_TOKEN", default="OOPS")
-TWITTER_ACCESS_TOKEN_SECRET = os.getenv("TWITTER_ACCESS_TOKEN_SECRET", default="OOPS")
+TWITTER_ACCESS_TOKEN_SECRET = os.getenv("TWITTER_ACCESS_TOKEN_SECRET",
+                                        default="OOPS")
 
 
 def twitter_api_client():
